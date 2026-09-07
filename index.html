@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fragma Data</title>
+    <link rel="icon" href="data:,">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+        .login-container {
+            width: 400px;
+            padding: 40px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.2);
+
+            text-align: center;
+        }
+
+        .login-container h1 {
+            color: #333;
+
+            margin-bottom: 10px;
+
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        #providers {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+        .login-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #message {
+            margin-top: 20px;
+
+            color: #e74c3c;
+
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="login-container">
+
+        <h1>Fragma Data</h1>
+
+        <p class="subtitle">
+            Choose a provider to continue
+        </p>
+
+        <div id="providers">
+            Loading providers...
+        </div>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <script>
+
+        // BACKEND URL
+        const BACKEND_URL = "http://localhost:4041";
+
+
+        async function loadProviders() {
+
+            const providersContainer =
+                document.getElementById("providers");
+
+            const message =
+                document.getElementById("message");
+
+
+            try {
+
+                /*
+                 *
+                 * Frontend:
+                 * http://localhost:5501
+                 *
+                 * Backend:
+                 * http://localhost:4041
+                 */
+
+                const response =
+                    await fetch(
+                        BACKEND_URL +
+                        "/api/auth/providers",
+                        {
+                            method: "GET",
+                            credentials: "include"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load providers"
+                    );
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                providersContainer.innerHTML = "";
+
+
+                /*
+                 * Create login buttons
+                 * dynamically.
+                 */
+
+                data.providers.forEach(     
+                    function(provider) {
+
+                        const button =
+                            document.createElement(
+                                "button"
+                            );
+
+
+                        button.className =
+                            "login-btn";
+
+
+                        button.innerText =
+                            "Continue with " +
+                            provider.name;
+
+
+                        button.onclick =
+                            function() {
+
+                                window.location.href =
+                                    BACKEND_URL +
+                                    provider.loginUrl;
+                            };
+
+
+                        providersContainer.appendChild(
+                            button
+                        );
+
+                    }
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Provider loading error:",
+                    error
+                );
+
+
+                providersContainer.innerHTML = "";
+
+
+                message.innerText =
+                    "Unable to load login providers.";
+
+            }
+
+        }
+
+
+        /*
+         * Load providers when
+         * the page opens.
+         */
+
+        loadProviders();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Complete Registration</title>
+
+    <link rel="icon" href="data:,">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+        .register-container {
+            width: 420px;
+
+            padding: 40px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .register-container h1 {
+            text-align: center;
+
+            color: #333;
+
+            font-size: 27px;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #444;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #667eea;
+
+            box-shadow:
+                0 0 5px
+                rgba(102, 126, 234, 0.3);
+        }
+
+        .register-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 12px
+                rgba(0, 0, 0, 0.2);
+        }
+
+        #message {
+            margin-top: 20px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="register-container">
+
+        <h1>Complete Your Registration</h1>
+
+        <p class="subtitle">
+            Please provide the following details
+        </p>
+
+
+        <form id="registerForm">
+
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="department">
+                    Department
+                </label>
+
+                <input
+                    type="text"
+                    id="department"
+                    placeholder="Enter your department"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="designation">
+                    Designation
+                </label>
+
+                <input
+                    type="text"
+                    id="designation"
+                    placeholder="Enter your designation"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="register-btn"
+            >
+                Register
+            </button>
+
+        </form>
+
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <script>
+
+        // BACKEND URL
+        const BACKEND_URL =
+            "http://localhost:4041";
+
+
+        document
+            .getElementById("registerForm")
+            .addEventListener(
+                "submit",
+                async function(event) {
+
+                    event.preventDefault();
+
+
+                    const phone =
+                        document
+                            .getElementById("phone")
+                            .value;
+
+
+                    const department =
+                        document
+                            .getElementById("department")
+                            .value;
+
+
+                    const designation =
+                        document
+                            .getElementById("designation")
+                            .value;
+
+
+                    const message =
+                        document
+                            .getElementById("message");
+
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                BACKEND_URL +
+                                "/api/register",
+                                {
+                                    method: "POST",
+
+                                    /*
+                                     * VERY IMPORTANT
+                                     *
+                                     * This allows the browser
+                                     * to send the backend's
+                                     * JSESSIONID cookie.
+                                     */
+
+                                    credentials: "include",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            phone:
+                                                phone,
+
+                                            department:
+                                                department,
+
+                                            designation:
+                                                designation
+
+                                        })
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        /*
+                         * Registration successful
+                         */
+
+                        if (response.ok) {
+
+                            message.innerText =
+                                "Registration successful!";
+
+
+                            setTimeout(
+                                function() {
+
+                                    window.location.href =
+                                        "http://localhost:5501/dashboard.html";
+
+                                },
+                                1000
+                            );
+
+                        }
+
+
+                        /*
+                         * User is not authenticated
+                         */
+
+                        else if (
+                            response.status === 401
+                        ) {
+
+                            window.location.href =
+                                "http://localhost:5501/";
+
+                        }
+
+
+                        /*
+                         * Other errors
+                         */
+
+                        else {
+
+                            message.innerText =
+                                data.message ||
+                                "Registration failed.";
+
+                        }
+
+                    }
+
+
+                    catch (error) {
+
+                        console.error(
+                            "Registration error:",
+                            error
+                        );
+
+
+                        message.innerText =
+                            "Error during registration.";
+
+                    }
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>

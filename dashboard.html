@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fragma Data Dashboard</title>
+    <link rel="icon" href="data:,">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-container {
+            width: 450px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.2);
+
+            text-align: center;
+        }
+
+        .dashboard-container h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        #profile {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        #profile h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .profile-info {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+
+        .profile-info strong {
+            color: #333;
+        }
+
+        .logout-btn {
+            width: 100%;
+            margin-top: 30px;
+            padding: 12px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #e74c3c;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-container">
+
+        <h1>Fragma Data Dashboard</h1>
+
+        <div id="profile">
+            Loading profile...
+        </div>
+
+        <button
+            class="logout-btn"
+            onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+    <script>
+
+        /*
+         * Backend URL
+         */
+        const BACKEND_URL = "http://localhost:4041";
+
+        async function loadProfile() {
+
+            try {
+
+                const response = await fetch(
+                    BACKEND_URL + "/api/profile",
+                    {
+                        method: "GET",
+
+                        /*
+                         * IMPORTANT:
+                         * Send JSESSIONID cookie
+                         * to backend.
+                         */
+                        credentials: "include"
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                /*
+                 * User is registered
+                 */
+                if (response.ok) {
+
+                    document
+                        .getElementById("profile")
+                        .innerHTML = `
+
+                            ${
+                                data.picture
+                                ?
+                                `
+                                <img
+                                    src="${data.picture}"
+                                    alt="Profile Picture"
+                                    class="profile-picture"
+                                >
+                                `
+                                :
+                                ""
+                            }
+
+
+                            <h2>
+                                Welcome
+                                ${data.name || ""}
+                            </h2>
+
+
+                            <div class="profile-info">
+                                <strong>Email:</strong>
+                                ${data.email || ""}
+                            </div>
+
+
+                            <div class="profile-info">
+                                <strong>Phone:</strong>
+                                ${data.phone || ""}
+                            </div>
+
+
+                            <div class="profile-info">
+                                <strong>Department:</strong>
+                                ${data.department || ""}
+                            </div>
+
+
+                            <div class="profile-info">
+                                <strong>Designation:</strong>
+                                ${data.designation || ""}
+                            </div>
+
+
+                            <div class="profile-info">
+                                <strong>Provider:</strong>
+                                ${data.provider || ""}
+                            </div>
+
+                        `;
+                }
+
+
+                /*
+                 * Authenticated but not registered
+                 */
+                else if (response.status === 404) {
+
+                    window.location.href =
+                        "http://localhost:5501/register.html";
+                }
+
+
+                /*
+                 * Not authenticated
+                 */
+                else if (response.status === 401) {
+
+                    window.location.href =
+                        "http://localhost:5501/";
+                }
+
+
+                /*
+                 * Other error
+                 */
+                else {
+
+                    document
+                        .getElementById("profile")
+                        .innerHTML =
+                        "Unable to load profile.";
+                }
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Profile loading error:",
+                    error
+                );
+
+                document
+                    .getElementById("profile")
+                    .innerHTML =
+                    "Error loading profile.";
+            }
+        }
+
+
+
+        /*
+         * Logout
+         */
+        async function logout() {
+
+            try {
+
+                const response = await fetch(
+                    BACKEND_URL + "/api/logout",
+                    {
+                        method: "POST",
+
+                        /*
+                         * Send session cookie
+                         */
+                        credentials: "include"
+                    }
+                );
+
+
+                /*
+                 * Logout successful
+                 */
+                if (response.ok) {
+
+                    window.location.href =
+                        "http://localhost:5501/index.html";
+                }
+
+
+                else {
+
+                    console.error(
+                        "Logout failed. Status:",
+                        response.status
+                    );
+                }
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+            }
+        }
+
+
+
+        /*
+         * Load profile when page opens
+         */
+        loadProfile();
+
+    </script>
+
+</body>
+
+</html>
