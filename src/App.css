@@ -1,0 +1,552 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+}
+
+
+/* =========================
+   LOGIN PAGE
+   ========================= */
+
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    #eef2ff,
+    #f8fafc,
+    #e0f2fe
+  );
+
+  padding: 30px;
+}
+
+.login-card {
+  width: 430px;
+  max-width: 100%;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 45px 40px 30px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+
+  text-align: center;
+}
+
+
+/* =========================
+   BRAND
+   ========================= */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.brand-logo {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 24px;
+  font-weight: bold;
+
+  margin-bottom: 10px;
+}
+
+.brand span {
+  font-size: 18px;
+  font-weight: 600;
+
+  color: #334155;
+}
+
+
+/* =========================
+   LOGIN CONTENT
+   ========================= */
+
+.login-content h1 {
+  margin: 0;
+
+  font-size: 32px;
+
+  color: #0f172a;
+}
+
+.subtitle {
+  margin: 12px 0 28px;
+
+  color: #64748b;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================
+   MAIN SSO BUTTON
+   ========================= */
+
+.sso-button {
+  width: 100%;
+
+  padding: 14px 20px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.sso-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+.sso-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================
+   PROVIDER SECTION
+   ========================= */
+
+.provider-section {
+  margin-top: 25px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid #e2e8f0;
+}
+
+.provider-title {
+  margin-bottom: 15px;
+
+  text-align: left;
+
+  color: #475569;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   PROVIDER BUTTONS
+   ========================= */
+
+.provider-button {
+  width: 100%;
+
+  min-height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 10px 14px;
+
+  margin-bottom: 10px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  text-align: left;
+}
+
+.provider-button:hover {
+  background: #f8fafc;
+
+  border-color: #2563eb;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.provider-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================
+   PROVIDER ICON
+   ========================= */
+
+.provider-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  margin-right: 13px;
+}
+
+
+/* =========================
+   PROVIDER NAME
+   ========================= */
+
+.provider-info {
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.provider-name {
+  color: #1e293b;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =========================
+   ARROW
+   ========================= */
+
+.arrow {
+  color: #94a3b8;
+
+  font-size: 20px;
+
+  margin-left: 10px;
+}
+
+
+/* =========================
+   LOADING
+   ========================= */
+
+.loading {
+  padding: 15px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   ERROR
+   ========================= */
+
+.error-message {
+  margin-top: 10px;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   LOGIN FOOTER
+   ========================= */
+
+.login-footer {
+  margin-top: 10px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #f1f5f9;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   DASHBOARD
+   ========================= */
+
+.dashboard-page {
+  min-height: 100vh;
+
+  background: #f8fafc;
+}
+
+.dashboard-content {
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+}
+
+
+/* =========================
+   WELCOME CARD
+   ========================= */
+
+.welcome-card {
+  width: 500px;
+
+  max-width: 100%;
+
+  padding: 45px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================
+   SUCCESS ICON
+   ========================= */
+
+.success-icon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #dcfce7;
+
+  color: #16a34a;
+
+  font-size: 32px;
+
+  font-weight: bold;
+}
+
+
+/* =========================
+   DASHBOARD HEADING
+   ========================= */
+
+.welcome-card h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 30px;
+}
+
+
+/* =========================
+   DASHBOARD MESSAGE
+   ========================= */
+
+.dashboard-subtitle {
+  margin: 12px 0 25px;
+
+  color: #64748b;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+.dashboard-subtitle strong {
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+
+/* =========================
+   EMAIL BOX
+   ========================= */
+
+.email-box {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 18px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+.email-label {
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+.email-value {
+  color: #1e293b;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+   ========================= */
+
+.logout-button {
+  margin-top: 22px;
+
+  padding: 11px 28px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+  background: #f8fafc;
+
+  border-color: #cbd5e1;
+
+  color: #1e293b;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 500px) {
+
+  .login-page {
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 35px 25px 25px;
+  }
+
+  .login-content h1 {
+    font-size: 28px;
+  }
+
+  .welcome-card {
+    padding: 35px 25px;
+  }
+
+  .dashboard-content {
+    padding: 20px;
+  }
+}
